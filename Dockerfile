@@ -2,7 +2,7 @@ FROM ubuntu:latest
 #RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 && apt-add-repository https://cli.github.com/packages && apt update && apt install gh -y
 RUN apt-get update && apt-get install git -y 
 RUN mkdir /root/.ssh/
-ADD id_rsa.pub /root/.ssh/id_rsa
+ADD id_rsa /root/.ssh/id_rsa
 RUN chmod -R 0600 /root/.ssh/id_rsa
 RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan github.com  >> /root/.ssh/known_hosts
