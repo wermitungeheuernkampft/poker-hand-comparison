@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install git -y
 #        && ssh-keyscan github.com >> ~/.ssh/known_hosts \
 #        && cd /home/realtebo \
 #        && git clone git@github.com:realtebo/my-private-tool.git tools        
-#RUN git clone https://github.com/wermitungeheuernkampft/poker-hand-comparison.git
-#RUN cd poker-hand-comparison/
+RUN git clone https://github.com/wermitungeheuernkampft/poker-hand-comparison.git
+RUN cd poker-hand-comparison/
 #ADD /poker-hand-comparison/ .
 #COPY --chown=root / .
 COPY --chown=root prepare.sh .
