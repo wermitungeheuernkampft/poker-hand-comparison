@@ -8,20 +8,13 @@ object Boot extends App {
   val input = Iterator.continually ( StdIn.readLine ).takeWhile ( _.nonEmpty ).foreach ( proceed )
 
   def proceed(inputLine: String) = {
-    val inputToList = inputLine.trim.split ( " " ).toList
-    val gameType = inputToList.head
-
-    val (parser, comparator) = gameType match {
-      case ("omaha-holdem") => (OmahaInputParser, OmahaComparator)
-      case ("texas-holdem") => (TexasHoldemParser, TexasHoldemComparator)
-      case ("five-card-draw") => (FiveCardDrawParser, FiveCardDrawComparator)
-          }
-
-    val inputs = inputToList.tail
-    val hands = parser.parseLine ( inputs )
-    val result = comparator.compare ( hands )
-    val end = List ( result ).foreach ( OutputWriter.write ( _, print ) )
-    println(end)
-  }
-
+    val ErrorPrefix = "Error: "
+    inputLine.trim.split ( " " ).toList match {
+      case ("texas-holdem") :: board :: hands => OutputWriter.write (TexasHoldemComparator.compare(TexasHoldemParser.parseLine(board :: hands)), print)
+      case ("omaha-holdem") :: board :: hands => OutputWriter.write (OmahaComparator.compare(OmahaInputParser.parseLine(board :: hands)), print)
+      case ("five-card-draw") :: hands        => OutputWriter.write (FiveCardDrawComparator.compare(FiveCardDrawParser.parseLine(hands)), print)
+      case x :: _                             => print (ErrorPrefix + "Unrecognized game type")
+      case _                                  => print (ErrorPrefix + "Invalid input")
+    }
+   }
 }
